@@ -221,8 +221,175 @@ public class Countingreplyer{
 
 ## 2. LinkedList 구현하기
 
+- LinkedList에 대해 공부하세요.
+- 정수를 저장하는 ListNode 클래스를 구현하세요.
+- ListNode add(ListNode head, ListNode nodeToAdd, int position)를 구현하세요.
+- ListNode remove(ListNode head, int positionToRemove)를 구현하세요.
+- boolean contains(ListNode head, ListNode nodeTocheck)를 구현하세요.
+
+### `연결 리스트`
+
+- 기본 구조
+	- 현재 가지고 있는 값
+	- 다음 노드의 주소 값
+
+#### 특징
+
+연결리스트의 어느 위치에서라도 삭제나 삽입이 단일시간내에 가능함.
+
+Head노드는 첫번째 노드를 가르키는 필드만 존재함.
+
+#### `단일 연결리스트`
+- 단방향 연결리스트.
+- 한쪽 방향으로만 나아감.
+#### `이중 연결리스트`
+- 양뱡향 연결리스트.
+- 자기자신의 이전과 이후의 노드를 기억.
+#### `원형 연결리스트`
+- 단일리스트의 마지막 노드가 맨 처음 노드를 가리킴.
+
+~~~java
+public interface ListNodeInterface {
+    public ListNode add(ListNode head, ListNode nodeToAdd, int position);
+    public ListNode remove(ListNode head, int positionToRemove);
+    public boolean contains(ListNode head, ListNode nodeTocheck);
+}
+// 리스트 노드 인터페이스
+
+public class ListNode implements ListNodeInterface {
+    ListNode next;
+    Integer value, size;
+
+    public ListNode(){
+        this.next = null;
+        this.value = null;
+        this.size = 0;
+    }
+
+    public ListNode(int value){
+        this.next = null;
+        this.value = value;
+        this.size = 0;
+    }
+
+    @Override
+    public ListNode add(ListNode head, ListNode nodeToAdd, int position){
+        ListNode node = head;
+        if(position < 1 || position > head.size + 1){
+            System.out.print("Out of range");
+            System.exit(1);
+        }
+
+        for(int i = 1; i < position; i++){
+            node = node.next;
+        }
+        if(position <= head.size){
+            nodeToAdd.next = node.next;
+        }
+        node.next = nodeToAdd;
+        head.size++;
+        return head;
+    }
+
+    @Override
+    public ListNode remove(ListNode head, int positionToRemove){
+        ListNode node = head;
+        if(positionToRemove < 1 || positionToRemove > head.size){
+            System.out.print("Out of range");
+            System.exit(1);
+        }
+        for(int i = 1; i < positionToRemove; i++){
+            node = node.next;
+        }
+        ListNode nextNode = node.next.next;
+        node.next = null;
+        node.next = nextNode;
+
+        return head;
+    }
+
+    @Override
+    public boolean contains(ListNode head, ListNode nodeTocheck){
+        ListNode node = head.next;
+        while(node != null){
+            if(node.value.equals(nodeTocheck.value))
+                return true;
+
+            node = node.next;
+        }
+        return false;
+    }
+}
+// 리스트 노드 클래스
+
+public class Main {
+    public static void main(String[] args){
+        ListNode Head = new ListNode();
+
+        ListNode item = new ListNode(10);
+        Head = Head.add(Head, item, 1);
+
+        item = new ListNode(20);
+        Head = Head.add(Head, item, 1);
+
+        if(Head.contains(Head, item)){
+            System.out.println("Exist!");
+        }else{
+            System.out.println("Does not exist");
+        }
+    }
+}
+// 메인 클래스
+
+~~~
+
+
 ## 3. stack 구현하기
 
+~~~java
+
+public interface StackInterface {
+    public void push(int data);
+    public int pop();
+}
+// 스택 인터페이스
+
+public class StackArray implements StackInterface{
+    int[] Arr;
+    int pos = 0;
+
+    private StackArray(){ }
+    public StackArray(int size){
+        Arr = new int[size];
+    }
+
+    @Override
+    public void push(int data){
+        Arr[pos++] = data;
+    }
+
+    @Override
+    public int pop(){
+        return Arr[--pos];
+    }
+
+}
+//스택본체 클래스.
+
+public class Main {
+    public static void main(String[] args){
+        StackArray stack = new StackArray(10);
+        stack.push(10);
+        stack.push(12);
+
+        System.out.println(stack.pop());
+    }
+}
+// 메인 클래스.
+
+~~~
+
 ## 4. ListNode로 stack 구현하기
+
 
 ## 5. Queue 구현하기
