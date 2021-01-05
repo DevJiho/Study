@@ -346,6 +346,10 @@ public class Main {
 
 ## 3. stack 구현하기
 
+- int 배열을 사용해서 정수를 저장하는 Stack을 구현하세요.
+- void push(int data)를 구현하세요.
+- int pop()을 구현하세요.
+
 ~~~java
 
 public interface StackInterface {
@@ -391,5 +395,12 @@ public class Main {
 
 ## 4. ListNode로 stack 구현하기
 
+- ListNode head를 가지고 있는 ListNodeStack 클래스를 구현하세요.
+- void push(int data)를 구현하세요.
+- int pop()을 구현하세요.
+
 
 ## 5. Queue 구현하기
+
+- 배열을 사용해서 한번
+- ListNode를 사용해서 한번.
