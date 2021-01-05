@@ -350,6 +350,12 @@ public class Main {
 - void push(int data)를 구현하세요.
 - int pop()을 구현하세요.
 
+### `Stack`
+
+선입 후출 ( First in - Last out ) 구조의 자료구조.
+
+데이터의 삽입과 반출 모두 맨 끝에서 일어난다.
+
 ~~~java
 
 public interface StackInterface {
@@ -471,3 +477,137 @@ public class Main {
 
 - 배열을 사용해서 한번
 - ListNode를 사용해서 한번.
+
+### `Queue`
+
+선입 선출 ( First In - First Out ) 구조의 자료구조.
+
+데이터의 삽입은 맨 뒤에서 일어나고
+데이터의 반출은 맨 앞에서 일어난다.
+
+~~~java
+public interface ListNodeQueueInterface {
+    void push(int data);
+    int pop();
+}
+// 연결리스트 큐 인터페이스
+
+public class ListNode {
+    ListNode next;
+    Integer value;
+
+    public ListNode(){
+        next = null;
+        value = null;
+    }
+
+    public ListNode(int value){
+        next = null;
+        this.value = value;
+    }
+}
+// 연결리스트 노드 클래스
+
+public class ListNodeQueue extends ListNode implements ListNodeQueueInterface{
+    ListNode head;
+
+    public ListNodeQueue(){
+        head = new ListNode();
+    }
+
+    @Override
+    public void push(int data) {
+        ListNode node = head;
+        while(node.next != null){
+            node = node.next;
+        }
+        node.next = new ListNode(data);
+    }
+
+    @Override
+    public int pop() {
+        ListNode node = head;
+
+        if(node.next == null){
+            System.err.println("Error!");
+            System.exit(1);
+        }
+
+        node = node.next;
+        head.next = node.next;
+
+        return node.value;
+    }
+}
+// 연결리스트 본체 클래스
+
+public interface ArrayQueueInterface {
+    void push(int data);
+    int pop();
+}
+// 배열 큐 인터페이스
+
+public class ArrayQueue implements ArrayQueueInterface{
+    private int[] arr;
+    int size;
+
+    private ArrayQueue(){}
+
+    public ArrayQueue(int size){
+        this.arr = new int[size];
+        size = 0;
+    }
+
+    @Override
+    public void push(int data){
+        if(size == this.arr.length){
+            System.err.println("Size Over");
+            System.exit(1);
+        }
+        arr[size++] = data;
+    }
+
+    @Override
+    public int pop(){
+        if(size == 0){
+            System.err.println("Error!");
+            System.exit(1);
+        }
+        int ret = arr[0];
+        for(int i = 0; i < size; i++){
+            arr[i] = arr[i + 1];
+        }
+        size--;
+
+        return ret;
+    }
+}
+// 배열 큐 본체
+
+public class Main {
+    public static void main(String[] args){
+        ArrayQueue Arr_q = new ArrayQueue(100);
+
+        Arr_q.push(10);
+        Arr_q.push(20);
+        Arr_q.push(50);
+
+        System.out.println(Arr_q.pop());
+        System.out.println(Arr_q.pop());
+        System.out.println(Arr_q.pop());
+        //System.out.println(Arr_q.pop());
+
+        ListNodeQueue LNQueue = new ListNodeQueue();
+
+        LNQueue.push(12);
+        LNQueue.push(41);
+        LNQueue.push(131);
+
+        System.out.println(LNQueue.pop());
+        System.out.println(LNQueue.pop());
+        System.out.println(LNQueue.pop());
+
+    }
+}
+// 메인 
+~~~
