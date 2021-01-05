@@ -399,6 +399,73 @@ public class Main {
 - void push(int data)를 구현하세요.
 - int pop()을 구현하세요.
 
+~~~java
+
+public interface Stack {
+    public void push(int data);
+    public int pop();
+}
+// 인터페이스
+
+public class ListNode{
+    ListNode next;
+    Integer value, size;
+
+    public ListNode(){
+        next = null;
+        value = null;
+        size = 0;
+    }
+
+    public ListNode(int data){
+        next = null;
+        value = data;
+        size = 0;
+    }
+}
+//ListNode 클래스
+
+
+public class ListNodeStack extends ListNode implements Stack{
+    ListNode head = new ListNode();
+
+    @Override
+    public void push(int data){
+        ListNode node = this.head;
+        while(node.next != null){
+            node = node.next;
+        }
+        node.next = new ListNode(data);
+    }
+
+    @Override
+    public int pop(){
+        ListNode node = this.head;
+        while(node.next.next != null){
+            node = node.next;
+        }
+        int ret = node.next.value;
+        node.next = null;
+        return ret;
+    }
+}
+// ListNodeStack 클래스
+
+public class Main {
+    public static void main(String[] args){
+        ListNodeStack Head = new ListNodeStack();
+        Head.push(1);
+        Head.push(2);
+        Head.push(3);
+
+        System.out.println(Head.pop());
+        System.out.println(Head.pop());
+        System.out.println(Head.pop());
+    }
+}
+// 메인 
+
+~~~
 
 ## 5. Queue 구현하기
 
