@@ -73,29 +73,22 @@ public class 클래스이름{
 
 ### 몇가지 키워드
 
-- abstract
-  - 추상 클래스나 메소드를 의미 ( 틀만 정의 )
-- static
-  - 특정 클래스의 전역 변수를 의미
-- private
-  - 같은 클래스에서 접근가능. ( 객체에서 접근 불가 )
-- protected
-  - 같은 클래스, 하위 클래스, 같은 패키지내에 있는 클래스에서 접근가능
-- [default] ( 아무것도 안달았을 때 )
-  - 같은 패키지내의 클래스에서 접근가능
-- public
-  - 모두가 접근가능
-- final
-  - 상수를 의미
-- interface
-  - 추상 메소드와 상수만 사용 가능
-- implements 
-  - 인터페이스를 상속한다는 느낌
-- extends
-  - 뒤에 붙은 클래스를 
-- this
-  - 객체 자신의 멤버필드를 의미.
-  - static이 붙은 메소드는 같은 메모리 영역이므로 사용 불가능
+|   키워드   |                                          설명                                          |
+|:----------:|:--------------------------------------------------------------------------------------:|
+|  abstract  |                        추상 클래스나 메소드를 의미 ( 틀만 정의 )                       |
+|   static   |                             특정 클래스의 전역 변수를 의미                             |
+|   private  |                    같은 클래스에서 접근가능. ( 객체에서 접근 불가 )                    |
+|  protected |           같은 클래스, 하위 클래스, 같은 패키지내에 있는 클래스에서 접근가능           |
+|  [default] |                           같은 패키지내의 클래스에서 접근가능                          |
+|   public   |                                     모두가 접근가능                                    |
+|    final   |                                       상수를 의미                                      |
+|  interface |                             추상 메소드와 상수만 사용 가능                             |
+| implements |                              인터페이스를 상속한다는 느낌                              |
+|   extends  |                                   뒤에 붙은 클래스를                                   |
+|    this    | 객체 자신의 멤버필드를 의미. static이 붙은 메소드는 같은 메모리 영역이므로 사용 불가능 |
+
+
+
 
 ## 객체
 
@@ -134,3 +127,98 @@ new 뒤에 붙은 클래스명()의 경우, 해당 클래스의 해당 생성자
 - Binary Tree ( 이진 트리 ) 라는 클래스를 정의하고 주어진 노드를 기준으로 출력하는 bfs(Node node) 와 dfs(Node node) 메소드 구현하기
 - DFS는 왼쪽, 루트, 오른쪽 순회
 
+~~~java
+
+public interface NodeInterface {
+    void push(int value);
+}
+// Node 인터페이스 
+
+
+public class Node implements NodeInterface{
+    Integer value;
+    Node left, right;
+    public static int size;
+
+    @Override
+    public void push(int value){
+        this.value = value;
+    }
+}
+// Node 클래스
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class BinaryTree{
+    Node node;
+
+    BinaryTree(){
+        node = null;
+    }
+
+    public void bfs(Node node){
+        Queue<Node> q = new LinkedList<>();
+        q.add(node);
+        while(true){
+            node = q.poll();
+            if(node == null) break;
+            System.out.println(node.value);
+            q.add(node.left);
+            q.add(node.right);
+        }
+    }
+
+    public void dfs(Node node){
+        if(node == null) return;
+        dfs(node.left);
+
+        System.out.println(node.value);
+
+        dfs(node.right);
+    }
+
+    public void findLeaf(Node node, int value){
+        if(node == null){
+            this.node = new Node();
+            this.node.push(value);
+            return;
+        }
+        Queue<Node> q = new LinkedList<>();
+        q.add(node);
+        while(true){
+            node = q.poll();
+            if(node.left == null){
+                node.left = new Node();
+                node.left.push(value);
+                break;
+            }else if(node.right == null){
+                node.right = new Node();
+                node.right.push(value);
+                break;
+            }
+            q.add(node.left);
+            q.add(node.right);
+        }
+    }
+
+}
+// 이진트리 클래스
+
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args){
+        BinaryTree root = new BinaryTree();
+
+        int[] arr = {42,13,12,42,13,16,41};
+        Arrays.stream(arr).forEach(item -> root.findLeaf(root.node, item));
+
+        System.out.println("\n print BFS");
+        root.bfs(root.node);
+
+        System.out.println("\n print DFS");
+        root.dfs(root.node);
+    }
+}
+//main 클래스
