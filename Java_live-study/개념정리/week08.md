@@ -13,13 +13,14 @@
 
 # 참고 및 출처
 
-- 스프링 입문을위한 자바 객체 지향의 원리와 이해
+- [스프링 입문을위한 자바 객체 지향의 원리와 이해](http://www.yes24.com/Product/Goods/17350624)
 - http://www.tcpschool.com/java/java_polymorphism_interface
 - https://beomseok95.tistory.com/272
 - https://jeong-pro.tistory.com/209
 - https://flyburi.com/605
 - https://www.vojtechruzicka.com/java-interface-history/
 - https://grokonez.com/java/java-9-private-interface-method
+- https://doublesprogramming.tistory.com/157
 
 * * *
 
@@ -37,7 +38,7 @@
 
 인터페이스는 하위클래스로 하여금 특정 메소드의 기능을 강제할 수 있으며, 상수를 정의할 수 있다.
 
-하위클래스는 반드시 인터페이스의 추상메소드를 재정의하여 사용해야한다. ( 자바 8 이전 )
+하위클래스는 반드시 인터페이스의 추상메소드를 재정의하여 사용해야한다.
 
 
 ~~~java
@@ -62,13 +63,61 @@ interface Name{
 interface fly{
   /* 추상 메소드 */
   /* 상수 정의 */
-}
+} // 인터페이스 선언
 
-public class Animal implement fly{
+public class Animal implement fly{ 
    @Override
-   /* fly의 추상메소드 재정의 */
+   /* fly의 추상메소드 재정의 */ 
+   // 재정의를 통한 인터페이스의 추상메소드 구현
 }
 
+public class Main{
+  public static void main(String[] args){
+    Animal tmp = new Animal();
+    tmp./*재정의 된 메소드*/
+  }
+}
+~~~
+
+### 인터페이스 참조를 통한 구현체
+
+인터페이스도 결국 하나의 클래스이기 때문에 인터페이스 타입을 가지는 변수나 리턴타입의 선언이 가능하다.
+
+인터페이스 타입의 참조변수로 이를 구현한 클래스의 인스턴스를 참조할 수 있으며, 인터페이스 타입으로 형 변환도 가능하다.
+
+인터페이스 타입의 매개변수는 해당 인터페이스를 구현한 클래스의 인스턴스를 제공하는 것이다.
+
+인터페이스 리턴타입의 경우 인터페이스를 구현한 클래스의 인스턴스를 반환해야한다는 의미이다.
+
+### 인터페이스의 상속
+
+클래스 상속에서 불가능하던 다중상속 기능을 제공한다.
+
+인터페이스의 경우 Object클래스와 같은 최고조상이 존재하지 않는다.
+~~~java
+
+interface test01{
+  void a();
+}
+
+interface test02{
+  void b();
+}
+
+interface test03{
+  void c();
+}
+
+public class Main implements test01, test02, test03{
+  @Override
+  public void a(){}
+  
+  @Override
+  public void b(){}
+  
+  @Override
+  public void c(){}
+}
 ~~~
 
 ### 인터페이스의 기본 메소드 ( public default ), 자바 8
@@ -88,6 +137,8 @@ default 키워드를 통하여 메소드를 선언하면 구현부의 작성이 
 참조변수를 통한 호출이 가능하다.
 
 작성된 구현부는 해당 인터페이스를 상속한 클래스에서 재정의를 하지 않았으면 작성된 그대로의 기능을 수행한다.
+
+인터페이스 타입의 참조변수, 참조중인 클래스 타입의 참조변수, 참조중인 클래스의 생성자에서 호출이 가능하다.
 
 ### 인터페이스의 정적 메소드 ( public static ), 자바 8
 
@@ -131,7 +182,7 @@ public interface Private{
 }
 ~~~
 
-위와 같이 선언된 메소드는 몇가지 특징이 있다.
+위와 같이 선언된 private 메소드는 몇가지 특징이 있다.
 
 1. 추상메소드가 아니며, 구현부가 존재한다.
 2. 정적메소드로 선언이 가능하다
