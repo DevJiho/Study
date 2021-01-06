@@ -197,13 +197,13 @@ public void accept(Visitor v){
 
 > 출처 : https://defacto-standard.tistory.com/413
 
-## 추상 클래스
+## `추상 클래스`
 
 선언시 abstract 키워드로 선언된 클래스.
 
 **추상메소드만 포함하는 클래스**를 의미한다.
 
-### 추상 메소드
+### `추상 메소드`
 
 메소드의 재정의를 강제하는 메소드.
 
